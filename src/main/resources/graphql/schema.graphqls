@@ -1,0 +1,16 @@
+type Query {
+    movies : [Movie]
+    movie(title : String!) : Movie
+}
+
+type Movie {
+    title: String!
+    description : String!
+    actors: [Person]
+    directors: [Person]
+}
+
+type Person {
+    name: String!
+    yearOfBirth: Int
+}

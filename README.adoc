@@ -1,0 +1,119 @@
+== Spring GraphQL with Spring Data Neo4j
+
+This example project shows how to combine https://docs.spring.io/spring-graphql/docs/1.0.0-M1/reference/html/[Spring GraphQL] with https://docs.spring.io/spring-data/neo4j/docs/current/reference/html/#reference[Spring Data Neo4j].
+
+=== How to run
+
+For this example we are using Docker.
+
+[source,bash]
+----
+ docker run -p7474:7474 -p7687:7687 --env NEO4J_AUTH=neo4j/secret neo4j:4.3
+----
+
+When your local instance is running please adjust the connections parameters in your _application.properties_ file.
+
+.application.properties
+----
+spring.neo4j.uri=neo4j://localhost:7687
+spring.neo4j.authentication.username=neo4j
+spring.neo4j.authentication.password=secret
+----
+
+When you start the application, the example movie data set will get published to the database.
+
+[source,shell]
+----
+./mvnw spring-boot:run
+----
+
+=== How to explore
+
+The current schema looks like this:
+
+[source,graphql endpoint]
+.schema.graphqls
+----
+type Query {
+    movies : [Movie]
+    movie(title : String!) : Movie
+}
+
+type Movie {
+    title: String!
+    description : String!
+    actors: [Person]
+    directors: [Person]
+}
+
+type Person {
+    name: String!
+    yearOfBirth: Int
+}
+----
+
+Example queries as you can see above are:
+
+[source,graphql]
+.Query all movies
+----
+{movies {title, actors {name, yearOfBirth}}}
+----
+will return:
+
+[source, json]
+----
+{
+  "data": {
+    "movies": [
+      {
+        "title": "The Matrix",
+        "actors": [
+          {
+            "name": "Gloria Foster",
+            "yearOfBirth": null
+          },
+          {
+            "name": "Hugo Weaving",
+            "yearOfBirth": 1960
+          },
+          {
+            "name": "Keanu Reeves",
+            "yearOfBirth": 1964
+          },
+          {
+            "name": "Emil Eifrem",
+            "yearOfBirth": 1978
+          }, ...
+     ]},
+     {
+        "title": "The Matrix Reloaded",
+        "actors": [
+          {
+            "name": "Gloria Foster",
+            "yearOfBirth": null
+          }, ....
+        ]}
+    ]}
+}
+----
+
+[source,graphql]
+.Query one particular movie
+----
+{movie (title: "The Matrix") {title, description}}
+----
+
+will return:
+
+[source, json]
+----
+{
+  "data": {
+    "movie": {
+      "title": "The Matrix",
+      "description": "Welcome to the Real World"
+    }
+  }
+}
+----
