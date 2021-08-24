@@ -4,7 +4,14 @@ This example project shows how to combine https://docs.spring.io/spring-graphql/
 
 NOTE: This project needs Spring GraphQL M1 and Spring Data Neo4j 6.2.0-SNAPSHOT (30.07.2021 or later)
 
-=== How to run
+=== Try it out
+
+
+==== Hosted instance
+
+An hosted instance is available at https://spring-graphql-neo4j.herokuapp.com/graphiql?path=/graphql
+
+==== Run the application yourself
 
 For this example we are using Docker.
 
@@ -29,7 +36,7 @@ When you start the application, the example movie data set will get published to
 ./mvnw spring-boot:run
 ----
 
-=== How to explore
+=== What to explore
 
 The current schema looks like this:
 
@@ -44,6 +51,7 @@ type Query {
 type Movie {
     title: String!
     description : String!
+    overview: String
     actors: [Person]
     directors: [Person]
 }
@@ -119,3 +127,12 @@ will return:
   }
 }
 ----
+
+==== Multiple sources
+
+It is possible to aggregate the data from different sources.
+For example the `overview` field of the `Movie` will get fetched from https://www.themoviedb.org/.
+
+Please keep in mind that it would make sense to mark the `overview` field as optional to fetch and wrap the retrieval into a resilience library (e.g. for retries).
+Also instead of delivering the value of the field, we could _just_ provide a link for the GraphQL client to get the data itself.
+This would avoid that this application gets the bottleneck of communication.
