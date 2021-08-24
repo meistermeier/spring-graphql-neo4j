@@ -16,6 +16,7 @@
     <properties>
         <java.version>11</java.version>
         <spring-graphql.version>1.0.0-M1</spring-graphql.version>
+        <testcontainers.version>1.16.0</testcontainers.version>
     </properties>
     <dependencies>
         <dependency>
@@ -54,6 +55,26 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.testcontainers</groupId>
+            <artifactId>neo4j</artifactId>
+            <version>${testcontainers.version}</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.testcontainers</groupId>
+            <artifactId>junit-jupiter</artifactId>
+            <version>${testcontainers.version}</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-webflux</artifactId>
             <scope>test</scope>
         </dependency>
 
