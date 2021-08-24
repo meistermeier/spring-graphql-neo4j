@@ -6,6 +6,7 @@ type Query {
 type Movie {
     title: String!
     description : String!
+    overview: String
     actors: [Person]
     directors: [Person]
 }

@@ -10,10 +10,12 @@ import org.springframework.stereotype.Component;
 public class MovieDataWiring implements RuntimeWiringBuilderCustomizer {
 
     private final MovieRepository repository;
+    private final MovieService movieService;
 
     @Autowired
-    public MovieDataWiring(MovieRepository repository) {
+    public MovieDataWiring(MovieRepository repository, MovieService movieService) {
         this.repository = repository;
+        this.movieService = movieService;
     }
 
     @Override
@@ -21,5 +23,8 @@ public class MovieDataWiring implements RuntimeWiringBuilderCustomizer {
         builder.type("Query", typeWiring -> typeWiring
                 .dataFetcher("movies", QuerydslDataFetcher.builder(repository).many())
                 .dataFetcher("movie", QuerydslDataFetcher.builder(repository).single()));
+
+        builder.type("Movie", typeWiring -> typeWiring
+                .dataFetcher("overview", env -> this.movieService.getOverview(env.getSource())));
     }
 }
