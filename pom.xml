@@ -15,7 +15,7 @@
     <description>Demo project for Spring Boot</description>
     <properties>
         <java.version>11</java.version>
-        <spring-graphql.version>1.0.0-M1</spring-graphql.version>
+        <spring-graphql.version>1.0.0-M2</spring-graphql.version>
         <testcontainers.version>1.16.0</testcontainers.version>
     </properties>
     <dependencies>
