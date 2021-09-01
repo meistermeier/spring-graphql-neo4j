@@ -133,6 +133,26 @@ will return:
 It is possible to aggregate the data from different sources.
 For example the `overview` field of the `Movie` will get fetched from https://www.themoviedb.org/.
 
+[source,graphql]
+.Query movie with field from other source
+----
+{movie (title: "The Matrix") {title, overview}}
+----
+
+returns
+
+[source, json]
+----
+{
+  "data": {
+    "movie": {
+      "title": "The Matrix",
+      "overview": "Set in the 22nd century, [...] computers who now rule the earth."
+    }
+  }
+}
+----
+
 Please keep in mind that it would make sense to mark the `overview` field as optional to fetch and wrap the retrieval into a resilience library (e.g. for retries).
 Also instead of delivering the value of the field, we could _just_ provide a link for the GraphQL client to get the data itself.
 This would avoid that this application gets the bottleneck of communication.
