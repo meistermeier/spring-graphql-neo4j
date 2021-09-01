@@ -1,8 +1,6 @@
 == Spring GraphQL with Spring Data Neo4j
 
-This example project shows how to combine https://docs.spring.io/spring-graphql/docs/1.0.0-M1/reference/html/[Spring GraphQL] with https://docs.spring.io/spring-data/neo4j/docs/current/reference/html/#reference[Spring Data Neo4j].
-
-NOTE: This project needs Spring GraphQL M1 and Spring Data Neo4j 6.2.0-SNAPSHOT (30.07.2021 or later)
+This example project shows how to combine https://docs.spring.io/spring-graphql/docs/1.0.0-M2/reference/html/[Spring GraphQL] with https://docs.spring.io/spring-data/neo4j/docs/current/reference/html/#reference[Spring Data Neo4j].
 
 === Try it out
 

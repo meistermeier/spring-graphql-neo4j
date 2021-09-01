@@ -8,11 +8,14 @@
         <version>2.6.0-SNAPSHOT</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
+
     <groupId>com.meistermeier</groupId>
     <artifactId>spring-neo4j-graphql</artifactId>
     <version>0.0.1-SNAPSHOT</version>
+
     <name>spring-neo4j-graphql</name>
-    <description>Demo project for Spring Boot</description>
+    <description>Combining Spring Data Neo4j and Spring GraphQL</description>
+
     <properties>
         <java.version>11</java.version>
         <spring-graphql.version>1.0.0-M2</spring-graphql.version>
@@ -38,7 +41,6 @@
         <dependency>
             <groupId>org.springframework.data</groupId>
             <artifactId>spring-data-neo4j</artifactId>
-            <version>6.2.0-SNAPSHOT</version>
         </dependency>
 
         <dependency>
