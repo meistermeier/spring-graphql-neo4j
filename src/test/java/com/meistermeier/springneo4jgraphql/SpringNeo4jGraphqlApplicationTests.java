@@ -2,8 +2,8 @@ package com.meistermeier.springneo4jgraphql;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.graphql.tester.AutoConfigureGraphQlTester;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.graphql.boot.test.tester.AutoConfigureGraphQlTester;
 import org.springframework.graphql.test.tester.GraphQlTester;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
@@ -43,7 +43,7 @@ public class SpringNeo4jGraphqlApplicationTests {
                 "  }" +
                 "}";
 
-        this.graphQlTester.query(query)
+        this.graphQlTester.document(query)
                 .execute()
                 .path("movie")
                 .matchesJson("{\"title\":\"The Matrix\"}");
