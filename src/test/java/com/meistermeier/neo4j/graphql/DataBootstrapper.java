@@ -1,4 +1,4 @@
-package com.meistermeier.springneo4jgraphql.movie;
+package com.meistermeier.neo4j.graphql;
 
 import org.neo4j.driver.Driver;
 import org.springframework.beans.factory.annotation.Autowired;

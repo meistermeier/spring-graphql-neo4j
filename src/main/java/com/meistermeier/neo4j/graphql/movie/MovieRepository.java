@@ -1,4 +1,4 @@
-package com.meistermeier.springneo4jgraphql.movie;
+package com.meistermeier.neo4j.graphql.movie;
 
 import org.springframework.data.neo4j.repository.Neo4jRepository;
 import org.springframework.data.querydsl.QuerydslPredicateExecutor;

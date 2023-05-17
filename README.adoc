@@ -1,36 +1,43 @@
 == Spring GraphQL with Spring Data Neo4j
 
-This example project shows how to combine https://docs.spring.io/spring-graphql/docs/1.0.0-M2/reference/html/[Spring GraphQL] with https://docs.spring.io/spring-data/neo4j/docs/current/reference/html/#reference[Spring Data Neo4j].
+This example project shows how to combine https://docs.spring.io/spring-graphql/docs/1.2.0/reference/html/[Spring GraphQL 1.2.0] with https://docs.spring.io/spring-data/neo4j/docs/current/reference/html/#reference[Spring Data Neo4j 7.1.0].
+The project itself is based on Spring Boot 3.1 to make use of some very nice improvements.
+
+=== Planned features / tasks for this example
+
+* Support for Scroll/Pagination https://docs.spring.io/spring-graphql/docs/current/reference/html/#data.pagination.scroll
+** Need to implement functionality in Spring Data Neo4j first
+* Native compilation documentation
+
+=== Features used in this example
+
+==== New Testcontainers support features
+
+* `@ServiceConnection`: https://docs.spring.io/spring-boot/docs/3.1.x/reference/htmlsingle/#features.testing.testcontainers.service-connections
+* Testcontainers at development time: https://docs.spring.io/spring-boot/docs/3.1.x/reference/htmlsingle/#features.testing.testcontainers.at-development-time
+* `@ImportTestcontainers`: https://docs.spring.io/spring-boot/docs/3.1.x/reference/htmlsingle/#features.testing.testcontainers.at-development-time.importing-container-declarations
 
 === Try it out
 
-
-==== Hosted instance
-
-An hosted instance is available at https://spring-graphql-neo4j.herokuapp.com/graphiql?path=/graphql
-
 ==== Run the application yourself
 
-For this example we are using Docker.
+===== With a test database
 
-[source,bash]
-----
- docker run -p7474:7474 -p7687:7687 --env NEO4J_AUTH=neo4j/secret neo4j:4.3
-----
-
-When your local instance is running please adjust the connections parameters in your _application.properties_ file.
-
-.application.properties
-----
-spring.neo4j.uri=neo4j://localhost:7687
-spring.neo4j.authentication.username=neo4j
-spring.neo4j.authentication.password=secret
-----
-
-When you start the application, the example movie data set will get published to the database.
+The project provides a Neo4j testcontainer instance if it gets started from the tests. (Docker needed)
 
 [source,shell]
 ----
+./mvnw spring-boot:test-run
+----
+
+===== With a "production" database
+
+If you want to connect to a running instance, you have to start the application with the matching environment variables
+
+[source,shell]
+----
+SPRING_NEO4J_AUTHENTICATION_PASSWORD=<your password> \\
+SPRING_NEO4j_URI=<your uri, default bolt://localhost:7687> \\
 ./mvnw spring-boot:run
 ----
 
@@ -47,14 +54,18 @@ type Query {
 }
 
 type Movie {
+    id: ID!
     title: String!
     description : String!
-    overview: String
+    "Random number 0 - 100 as an example for aggregation of data"
+    rating: Int
     actors: [Person]
     directors: [Person]
 }
 
+"A person is either an actor or a director"
 type Person {
+    id: ID!
     name: String!
     yearOfBirth: Int
 }
@@ -129,12 +140,12 @@ will return:
 ==== Multiple sources
 
 It is possible to aggregate the data from different sources.
-For example the `overview` field of the `Movie` will get fetched from https://www.themoviedb.org/.
+For example the `rating` field of the `Movie` will be a random generated number between 0 and 100.
 
 [source,graphql]
 .Query movie with field from other source
 ----
-{movie (title: "The Matrix") {title, overview}}
+{movie (title: "The Matrix") {title, rating}}
 ----
 
 returns
@@ -145,12 +156,8 @@ returns
   "data": {
     "movie": {
       "title": "The Matrix",
-      "overview": "Set in the 22nd century, [...] computers who now rule the earth."
+      "rating": 99
     }
   }
 }
 ----
-
-Please keep in mind that it would make sense to mark the `overview` field as optional to fetch and wrap the retrieval into a resilience library (e.g. for retries).
-Also instead of delivering the value of the field, we could _just_ provide a link for the GraphQL client to get the data itself.
-This would avoid that this application gets the bottleneck of communication.

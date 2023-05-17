@@ -4,14 +4,18 @@ type Query {
 }
 
 type Movie {
+    id: ID!
     title: String!
     description : String!
-    overview: String
+    "Random number 0 - 100 as an example for aggregation of data"
+    rating: Int
     actors: [Person]
     directors: [Person]
 }
 
+"A person is either an actor or a director"
 type Person {
+    id: ID!
     name: String!
     yearOfBirth: Int
 }

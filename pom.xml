@@ -5,7 +5,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.7.0-M3</version>
+        <version>3.1.0-RC2</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
 
@@ -18,8 +18,9 @@
 
     <properties>
         <java.version>17</java.version>
-        <logback.version>1.2.8</logback.version>
-        <testcontainers.version>1.16.3</testcontainers.version>
+        <!-- Use the release versions prior Spring Boot 3.1 release -->
+        <spring-data-bom.version>2023.0.0</spring-data-bom.version>
+        <spring-graphql.version>1.2.0</spring-graphql.version>
     </properties>
     <dependencies>
         <dependency>
@@ -66,14 +67,18 @@
         <dependency>
             <groupId>org.testcontainers</groupId>
             <artifactId>neo4j</artifactId>
-            <version>${testcontainers.version}</version>
             <scope>test</scope>
         </dependency>
 
         <dependency>
             <groupId>org.testcontainers</groupId>
             <artifactId>junit-jupiter</artifactId>
-            <version>${testcontainers.version}</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-testcontainers</artifactId>
             <scope>test</scope>
         </dependency>
 

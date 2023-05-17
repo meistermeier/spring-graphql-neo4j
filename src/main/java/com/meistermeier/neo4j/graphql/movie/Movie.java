@@ -1,6 +1,7 @@
-package com.meistermeier.springneo4jgraphql.movie;
+package com.meistermeier.neo4j.graphql.movie;
 
 import com.querydsl.core.annotations.QueryEntity;
+import org.springframework.data.neo4j.core.schema.GeneratedValue;
 import org.springframework.data.neo4j.core.schema.Id;
 import org.springframework.data.neo4j.core.schema.Node;
 import org.springframework.data.neo4j.core.schema.Property;
@@ -13,6 +14,9 @@ import java.util.List;
 public class Movie {
 
     @Id
+    @GeneratedValue
+    private final String id;
+
     private final String title;
 
     @Property("tagline")
@@ -24,11 +28,16 @@ public class Movie {
     @Relationship(type = "DIRECTED", direction = Relationship.Direction.INCOMING)
     private final List<Person> directors;
 
-    public Movie(String title, String description, List<Person> actors, List<Person> directors) {
+    public Movie(String id, String title, String description, List<Person> actors, List<Person> directors) {
+        this.id = id;
         this.title = title;
         this.description = description;
         this.actors = actors;
         this.directors = directors;
+    }
+
+    public String getId() {
+        return id;
     }
 
     public String getTitle() {
