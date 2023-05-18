@@ -17,6 +17,10 @@ The project itself is based on Spring Boot 3.1 to make use of some very nice imp
 * Testcontainers at development time: https://docs.spring.io/spring-boot/docs/3.1.x/reference/htmlsingle/#features.testing.testcontainers.at-development-time
 * `@ImportTestcontainers`: https://docs.spring.io/spring-boot/docs/3.1.x/reference/htmlsingle/#features.testing.testcontainers.at-development-time.importing-container-declarations
 
+==== Neo4j-Migrations for test data creation
+
+Starting the application from the tests or running integration tests, the project will use https://github.com/michael-simons/neo4j-migrations[Neo4j-Migrations] to create the initial dataset.
+
 === Try it out
 
 ==== Run the application yourself
@@ -40,6 +44,9 @@ SPRING_NEO4J_AUTHENTICATION_PASSWORD=<your password> \\
 SPRING_NEO4j_URI=<your uri, default bolt://localhost:7687> \\
 ./mvnw spring-boot:run
 ----
+
+Please keep in mind that the application is focused on using the movie dataset.
+If not happen yet, please run the `:play movies` guide and the Cypher query to populate the database.
 
 === What to explore
 
