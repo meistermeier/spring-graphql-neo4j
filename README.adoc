@@ -11,7 +11,7 @@ The project itself is based on Spring Boot 3.1 to make use of some very nice imp
 * Native image support without additional definitions
 ** Spring Data Neo4j https://github.com/spring-projects/spring-data-neo4j/issues/2725[misses some hints] to compile out-of-the-box with Spring GraphQL
 
-=== Features used in this example
+=== Some features and libraries used in this example
 
 ==== New Testcontainers support features
 
@@ -22,6 +22,49 @@ The project itself is based on Spring Boot 3.1 to make use of some very nice imp
 ==== Neo4j-Migrations for test data creation
 
 Starting the application from the tests or running integration tests, the project will use https://github.com/michael-simons/neo4j-migrations[Neo4j-Migrations] to create the initial dataset.
+
+==== Neo4j Java driver metrics / health
+
+===== Micrometer metrics
+
+Although the current version of the Neo4j Java driver is 5.7.,
+the Spring Boot autoconfiguration is backwards compatible to the whole 4.x versions.
+As a consequence, it cannot configure the metrics provider automatically and we need to provide a `ConfigBuilderCustomizer`
+to set `Micrometer` as the adapter.
+
+[source,java]
+----
+@Bean
+ConfigBuilderCustomizer configBuilderCustomizer() {
+    return configBuilder -> configBuilder.withMetricsAdapter(MetricsAdapter.MICROMETER);
+}
+----
+
+This will provide following metrics to consume.
+Accessible via http://localhost:8080/actuator/metrics/<neo4j.driver.metric>
+
+[source,text]
+.Overview of available Neo4j driver metrics
+----
+neo4j.driver.connections.acquiring
+neo4j.driver.connections.acquisition
+neo4j.driver.connections.acquisition.timeout
+neo4j.driver.connections.closed
+neo4j.driver.connections.creating
+neo4j.driver.connections.creation
+neo4j.driver.connections.failed
+neo4j.driver.connections.idle
+neo4j.driver.connections.in.use
+neo4j.driver.connections.usage
+----
+
+===== Health
+
+The health endpoint is enriched with the information about the connection to the running Neo4j instance
+and can be queried at http://localhost:8080/actuator/health/neo4j.
+
+Please be aware that both, metrics and health endpoints, are configured without any security mechanisms in this project's configuration.
+Always check the information you are exposing before deploying an application to the public.
 
 === Try it out
 
