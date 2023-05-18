@@ -6,8 +6,9 @@ The project itself is based on Spring Boot 3.1 to make use of some very nice imp
 === Planned features / tasks for this example
 
 * Support for Scroll/Pagination https://docs.spring.io/spring-graphql/docs/current/reference/html/#data.pagination.scroll
-** Need to implement functionality in Spring Data Neo4j first
+** Need to https://github.com/spring-projects/spring-data-neo4j/issues/2726[implement some functionality] in Spring Data Neo4j first
 * Native compilation documentation
+** Spring Data Neo4j https://github.com/spring-projects/spring-data-neo4j/issues/2725[misses some hints] to compile out-of-the-box with Spring GraphQL
 
 === Features used in this example
 
