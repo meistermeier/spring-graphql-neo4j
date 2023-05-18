@@ -1,0 +1,1 @@
+src/test/resources/neo4j/migrations/V0001__Create_movie_dataset.cypher linguist-generated
