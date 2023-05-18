@@ -60,6 +60,11 @@
 
         <dependency>
             <groupId>com.querydsl</groupId>
+            <artifactId>querydsl-core</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.querydsl</groupId>
             <artifactId>querydsl-apt</artifactId>
             <scope>provided</scope>
         </dependency>
@@ -84,11 +89,43 @@
 
     </dependencies>
 
+    <profiles>
+        <profile>
+            <id>native</id>
+            <build>
+                <pluginManagement>
+                    <plugins>
+                        <plugin>
+                            <groupId>org.graalvm.buildtools</groupId>
+                            <artifactId>native-maven-plugin</artifactId>
+                            <executions>
+                                <execution>
+                                    <id>build-image</id>
+                                    <goals>
+                                        <goal>compile-no-fork</goal>
+                                    </goals>
+                                </execution>
+                            </executions>
+                        </plugin>
+                    </plugins>
+                </pluginManagement>
+            </build>
+        </profile>
+    </profiles>
+
     <build>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+
+            <plugin>
+                <groupId>org.graalvm.buildtools</groupId>
+                <artifactId>native-maven-plugin</artifactId>
+                <configuration>
+                    <buildArgs>-H:ReflectionConfigurationFiles=src/main/resources/META-INF/reflections/additional-reflections.json</buildArgs>
+                </configuration>
             </plugin>
 
             <plugin>

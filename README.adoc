@@ -5,9 +5,10 @@ The project itself is based on Spring Boot 3.1 to make use of some very nice imp
 
 === Planned features / tasks for this example
 
+* Upgrade to release version of Spring Boot 3.1
 * Support for Scroll/Pagination https://docs.spring.io/spring-graphql/docs/current/reference/html/#data.pagination.scroll
 ** Need to https://github.com/spring-projects/spring-data-neo4j/issues/2726[implement some functionality] in Spring Data Neo4j first
-* Native compilation documentation
+* Native image support without additional definitions
 ** Spring Data Neo4j https://github.com/spring-projects/spring-data-neo4j/issues/2725[misses some hints] to compile out-of-the-box with Spring GraphQL
 
 === Features used in this example
@@ -24,9 +25,7 @@ Starting the application from the tests or running integration tests, the projec
 
 === Try it out
 
-==== Run the application yourself
-
-===== With a test database
+==== With a temporary test database
 
 The project provides a Neo4j testcontainer instance if it gets started from the tests. (Docker needed)
 
@@ -35,7 +34,7 @@ The project provides a Neo4j testcontainer instance if it gets started from the 
 ./mvnw spring-boot:test-run
 ----
 
-===== With a "production" database
+==== With a "production" database
 
 If you want to connect to a running instance, you have to start the application with the matching environment variables
 
@@ -48,6 +47,27 @@ SPRING_NEO4j_URI=<your uri, default bolt://localhost:7687> \\
 
 Please keep in mind that the application is focused on using the movie dataset.
 If not happen yet, please run the `:play movies` guide and the Cypher query to populate the database.
+
+==== Compile native
+
+This requires you to have GraalVM (Java 17 based) installed and included your _$PATH_ on your machine.
+There is a pre-configured profile (_native_) that will invoke the GraalVM's native maven plugin.
+
+[source,shell]
+.invoke native compile
+----
+./mvnw -Pnative clean package
+----
+
+After it has successfully compiled, you can invoke the executable similar to the command above.
+
+[source,shell]
+.start the application
+----
+SPRING_NEO4J_AUTHENTICATION_PASSWORD=<your password> \\
+SPRING_NEO4j_URI=<your uri, default bolt://localhost:7687> \\
+target/spring-neo4j-graphql
+----
 
 === What to explore
 

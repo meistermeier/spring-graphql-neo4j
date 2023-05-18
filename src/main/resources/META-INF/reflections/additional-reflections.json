@@ -1,0 +1,7 @@
+[
+  {
+    "name": "org.springframework.data.neo4j.repository.query.QuerydslNeo4jPredicateExecutor",
+    "queryAllPublicMethods": true,
+    "allDeclaredConstructors": true
+  }
+]
