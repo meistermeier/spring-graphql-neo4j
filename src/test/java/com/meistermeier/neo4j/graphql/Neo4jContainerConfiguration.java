@@ -12,6 +12,7 @@ import org.testcontainers.utility.DockerImageName;
  *
  * @author Gerrit Meier
  */
+// tag::blog_post[]
 public interface Neo4jContainerConfiguration {
 
     @Container
@@ -21,3 +22,4 @@ public interface Neo4jContainerConfiguration {
             .withReuse(true);
 
 }
+// end::blog_post[]

@@ -11,20 +11,20 @@ import org.springframework.context.annotation.Bean;
 @SpringBootApplication
 public class Neo4jGraphqlApplication {
 
-    public static void main(String[] args) {
-        SpringApplication.run(Neo4jGraphqlApplication.class, args);
-    }
+	public static void main(String[] args) {
+		SpringApplication.run(Neo4jGraphqlApplication.class, args);
+	}
 
-    @Bean
-    Configuration cypherDslConfiguration() {
-        return Configuration.newConfig().withDialect(Dialect.NEO4J_5).build();
-    }
+	@Bean
+	Configuration cypherDslConfiguration() {
+		return Configuration.newConfig().withDialect(Dialect.NEO4J_5).build();
+	}
 
-    /**
-     * Makes the Neo4j driver use Micrometer for metrics reporting.
-     */
-    @Bean
-    ConfigBuilderCustomizer configBuilderCustomizer() {
-        return configBuilder -> configBuilder.withMetricsAdapter(MetricsAdapter.MICROMETER);
-    }
+	/**
+	 * Makes the Neo4j driver use Micrometer for metrics reporting.
+	 */
+	@Bean
+	ConfigBuilderCustomizer configBuilderCustomizer() {
+		return configBuilder -> configBuilder.withMetricsAdapter(MetricsAdapter.MICROMETER);
+	}
 }

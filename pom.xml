@@ -5,7 +5,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.1.0</version>
+        <version>3.1.1</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
 
@@ -38,15 +38,21 @@
 
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-actuator</artifactId>
+            <artifactId>spring-boot-starter-webflux</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
+<!-- tag::neo4j_migrations[] -->
         <dependency>
             <groupId>eu.michael-simons.neo4j</groupId>
             <artifactId>neo4j-migrations-spring-boot-starter</artifactId>
             <version>${neo4j-migrations.version}</version>
             <scope>test</scope>
         </dependency>
+<!-- end::neo4j_migrations[] -->
 
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -60,17 +66,7 @@
             <scope>test</scope>
         </dependency>
 
-        <dependency>
-            <groupId>com.querydsl</groupId>
-            <artifactId>querydsl-core</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>com.querydsl</groupId>
-            <artifactId>querydsl-apt</artifactId>
-            <scope>provided</scope>
-        </dependency>
-
+        <!-- tag::testcontainers_neo4j[] -->
         <dependency>
             <groupId>org.testcontainers</groupId>
             <artifactId>neo4j</artifactId>
@@ -82,6 +78,7 @@
             <artifactId>junit-jupiter</artifactId>
             <scope>test</scope>
         </dependency>
+        <!-- end::testcontainers_neo4j[] -->
 
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -125,11 +122,6 @@
             <plugin>
                 <groupId>org.graalvm.buildtools</groupId>
                 <artifactId>native-maven-plugin</artifactId>
-                <configuration>
-                    <buildArgs>
-                        -H:ReflectionConfigurationFiles=src/main/resources/META-INF/reflections/additional-reflections.json
-                    </buildArgs>
-                </configuration>
             </plugin>
 
         </plugins>

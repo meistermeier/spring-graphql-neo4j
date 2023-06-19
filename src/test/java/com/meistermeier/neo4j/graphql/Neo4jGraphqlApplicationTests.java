@@ -14,6 +14,7 @@ import org.springframework.graphql.test.tester.GraphQlTester;
  *
  * @author Gerrit Meier
  */
+// tag::blog_post[]
 @SpringBootTest
 @ImportTestcontainers(Neo4jContainerConfiguration.class)
 public class Neo4jGraphqlApplicationTests {
@@ -28,16 +29,17 @@ public class Neo4jGraphqlApplicationTests {
     @Test
     void resultMatchesExpectation() {
         String query = "{" +
-                "  movie(title:\"The Matrix\") {" +
-                "    title" +
+                "  account(username:\"meistermeier\") {" +
+                "    displayName" +
                 "  }" +
                 "}";
 
         this.graphQlTester.document(query)
                 .execute()
-                .path("movie")
-                .matchesJson("{\"title\":\"The Matrix\"}");
+                .path("account")
+                .matchesJson("[{\"displayName\":\"Gerrit Meier\"}]");
 
     }
 
 }
+// end::blog_post[]

@@ -14,6 +14,7 @@ import org.testcontainers.containers.Neo4jContainer;
  *
  * @author Gerrit Meier
  */
+// tag::blog_post[]
 @TestConfiguration(proxyBeanMethods = false)
 public class TestNeo4jGraphqlApplication {
 
@@ -30,3 +31,4 @@ public class TestNeo4jGraphqlApplication {
 	}
 
 }
+// end::blog_post[]

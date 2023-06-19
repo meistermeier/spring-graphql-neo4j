@@ -1,21 +1,52 @@
+#tag::query[]
 type Query {
-    movies : [Movie]
-    movie(title : String!) : Movie
+#end::query[]
+    #tag::first_example[]
+    accounts: [Account]!
+    #end::first_example[]
+    #tag::second_example[]
+    account(username: String!): [Account]!
+    #end::second_example[]
+    #tag::connection_query[]
+    accountScroll(username:String, first: Int, after: String, last: Int, before:String): AccountConnection
+    #end::connection_query[]
+#tag::query[]
+}
+#end::query[]
+
+#tag::connection_schema[]
+type AccountConnection {
+    edges: [AccountEdge]!
+    pageInfo: PageInfo!
 }
 
-type Movie {
+type AccountEdge {
+    node: Account!
+    cursor: String!
+}
+
+type PageInfo {
+    hasPreviousPage: Boolean!
+    hasNextPage: Boolean!
+    startCursor: String
+    endCursor: String
+}
+#end::connection_schema[]
+
+#tag::schema[]
+type Account {
     id: ID!
+    username: String!
+    displayName: String!
+    server: Server!
+    following: [Account]
+    lastMessage: String!
+}
+
+type Server {
+    uri: ID!
     title: String!
-    description : String!
-    "Random number 0 - 100 as an example for aggregation of data"
-    rating: Int
-    actors: [Person]
-    directors: [Person]
+    shortDescription: String!
+    connectedServers: [Server]
 }
-
-"A person is either an actor or a director"
-type Person {
-    id: ID!
-    name: String!
-    yearOfBirth: Int
-}
+#end::schema[]
