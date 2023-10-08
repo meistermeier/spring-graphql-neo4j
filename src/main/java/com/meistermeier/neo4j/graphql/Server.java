@@ -34,22 +34,16 @@ public class Server {
 		this.shortDescription = shortDescription;
 	}
 
-//	Not working right now:
-//	see https://github.com/spring-projects/spring-data-neo4j/issues/2748
-//	public Server withConnectedServers(List<Server> connectedServers) {
-//		var server = new Server(this.title, this.uri, this.registrations, this.shortDescription);
-//		server.connectedServers = connectedServers;
-//		return server;
-//	}
-
+	public Server withConnectedServers(List<Server> connectedServers) {
+		var server = new Server(this.title, this.uri, this.registrationsAllowed, this.shortDescription);
+		server.connectedServers = connectedServers;
+		return server;
+	}
 
 	public String getUri() {
 		return uri;
 	}
 
-	public void setConnectedServers(List<Server> connectedServers) {
-		this.connectedServers = connectedServers;
-	}
 // tag::blog_post[]
 }
 // end::blog_post[]

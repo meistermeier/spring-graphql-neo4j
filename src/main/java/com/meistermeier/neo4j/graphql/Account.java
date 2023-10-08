@@ -34,13 +34,11 @@ public class Account {
 		this.server = server;
 	}
 
-//	Not working right now:
-//	see https://github.com/spring-projects/spring-data-neo4j/issues/2748
-//	public Account withFollowing(List<Account> following) {
-//		var account = new Account(this.id, this.username, this.displayName, this.server);
-//		account.following = following;
-//		return account;
-//	}
+	public Account withFollowing(List<Account> following) {
+		var account = new Account(this.id, this.username, this.displayName, this.server);
+		account.following = following;
+		return account;
+	}
 
 	public Server getServer() {
 		return server;
@@ -50,9 +48,6 @@ public class Account {
 		return id;
 	}
 
-	public void setFollowing(List<Account> following) {
-		this.following = following;
-	}
 // tag::blog_post[]
 }
 // end::blog_post[]

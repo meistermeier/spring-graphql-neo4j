@@ -19,27 +19,43 @@ import org.springframework.graphql.test.tester.GraphQlTester;
 @ImportTestcontainers(Neo4jContainerConfiguration.class)
 public class Neo4jGraphqlApplicationTests {
 
-    private final GraphQlTester graphQlTester;
+		private final GraphQlTester graphQlTester;
 
-    @Autowired
-    public Neo4jGraphqlApplicationTests(ExecutionGraphQlService graphQlService) {
-        this.graphQlTester = ExecutionGraphQlServiceTester.builder(graphQlService).build();
-    }
+		@Autowired
+		public Neo4jGraphqlApplicationTests(ExecutionGraphQlService graphQlService) {
+				this.graphQlTester = ExecutionGraphQlServiceTester.builder(graphQlService).build();
+		}
 
-    @Test
-    void resultMatchesExpectation() {
-        String query = "{" +
-                "  account(username:\"meistermeier\") {" +
-                "    displayName" +
-                "  }" +
-                "}";
+		@Test
+		void resultMatchesExpectation() {
+				String query = """
+						{
+							account(username:"meistermeier")
+						  {
+						  	displayName,
+						  	following {
+						  		username
+						  	}
+						  }
+						}""";
 
-        this.graphQlTester.document(query)
-                .execute()
-                .path("account")
-                .matchesJson("[{\"displayName\":\"Gerrit Meier\"}]");
+				this.graphQlTester.document(query)
+						.execute()
+						.path("account")
+						.matchesJson("""
+								[{
+								  "displayName": "Gerrit Meier",
+								  "following": [
+								     {
+								       "username": "rotnroll666"
+								     },
+								     {
+								       "username": "odrotbohm"
+								     }
+								  ]
+							}]""");
 
-    }
+		}
 
 }
 // end::blog_post[]
