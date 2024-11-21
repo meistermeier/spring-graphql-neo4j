@@ -25,7 +25,7 @@ public interface AccountRepository extends Neo4jRepository<Account, String>
 	@Override
 	default QueryByExampleDataFetcher.Builder<Account, ?> customize(QueryByExampleDataFetcher.Builder<Account, ?> builder) {
 		return builder.sortBy(Sort.by("username"))
-				.defaultScrollSubrange(new ScrollSubrange(ScrollPosition.offset(), 1, true));
+				.defaultScrollSubrange(1, (b) -> ScrollPosition.offset());
 	}
 
 // end::sort_order[]
