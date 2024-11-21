@@ -5,7 +5,6 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.neo4j.repository.Neo4jRepository;
 import org.springframework.graphql.data.GraphQlRepository;
 import org.springframework.graphql.data.query.QueryByExampleDataFetcher;
-import org.springframework.graphql.data.query.ScrollSubrange;
 
 /**
  * @author Gerrit Meier
